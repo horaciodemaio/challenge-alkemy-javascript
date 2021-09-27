@@ -1,8 +1,8 @@
-const { DataTypes, UUIDV4 } = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
 
-  sequelize.define('Type', {
+  sequelize.define('type', {
    type:{
     type: DataTypes.ENUM(["ingress","egress"]),
     allowNull:false,
