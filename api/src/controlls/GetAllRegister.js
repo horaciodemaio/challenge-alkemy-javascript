@@ -1,4 +1,5 @@
 const { Register, Type } = require('../db');
+var sequelize = require("sequelize");
 
 
 async function getAllRegister(req, res, next) {
@@ -7,8 +8,10 @@ async function getAllRegister(req, res, next) {
         if (type) {
 
             var findOne = await Register.findAll({
-                // limit: limit,
+                
                 // offset: offset,
+                limit: 10,
+                order: sequelize.literal("id DESC"),
                 include: {
                     model: Type,
                     attributes: ["name"],
@@ -20,11 +23,17 @@ async function getAllRegister(req, res, next) {
 
             if (findOne.length === 0) {
                 return res.status(404).send("Error: Name of type is invalid");
-            } else return res.json(findOne);
+            } else {
+                res.status(200).json(findOne);
+            }
+            
 
         } else {
 
             var allRegister = await Register.findAll({
+
+                limit: 10,
+                order: sequelize.literal("id DESC"),
                 attributes: { exclude: ["createdAt", "updatedAt"] },
                 include: [
                     { model: Type, attributes: { exclude: ["createdAt", "updatedAt"] } }
@@ -32,7 +41,10 @@ async function getAllRegister(req, res, next) {
             }
             );
 
-            res.json(allRegister);
+            res.status(200).json(allRegister);
+            
+
+            
         }
 
     } catch (error) {

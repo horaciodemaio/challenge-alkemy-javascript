@@ -1,7 +1,7 @@
-const {Type} = require("./src/db");
+const {Type, Register} = require("./src/db");
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const { ArrayTypes } = require("./contents")
+const { ArrayTypes, ArrayRegister } = require("./contents")
 
 conn.sync({ force: true })
 .then(() => {
@@ -12,7 +12,7 @@ conn.sync({ force: true })
     }
   });
   Type.bulkCreate(Types).then(console.log("me cargaron los datos en la tabla de Types"))
-
+  Register.bulkCreate(ArrayRegister).then(console.log("me cargaron los datos en la tabla de Register"))
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
