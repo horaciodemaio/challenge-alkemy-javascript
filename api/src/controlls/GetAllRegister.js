@@ -9,8 +9,6 @@ async function getAllRegister(req, res, next) {
 
             var findOne = await Register.findAll({
                 
-                // offset: offset,
-                limit: 10,
                 order: sequelize.literal("id DESC"),
                 include: {
                     model: Type,
@@ -26,13 +24,12 @@ async function getAllRegister(req, res, next) {
             } else {
                 res.status(200).json(findOne);
             }
-            
+
 
         } else {
 
             var allRegister = await Register.findAll({
 
-                limit: 10,
                 order: sequelize.literal("id DESC"),
                 attributes: { exclude: ["createdAt", "updatedAt"] },
                 include: [
@@ -42,9 +39,6 @@ async function getAllRegister(req, res, next) {
             );
 
             res.status(200).json(allRegister);
-            
-
-            
         }
 
     } catch (error) {
