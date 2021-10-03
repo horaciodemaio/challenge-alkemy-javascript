@@ -6,9 +6,9 @@ import Home from "./components/home/home"
 function App() {
   return (
     <BrowserRouter>
-    <div className="App">
-    <Route exact path ="/home" component={Home}/>
-    </div>
+    
+    <Route exact path ="/" component={Home}/>
+    
     </BrowserRouter>
   );
 }

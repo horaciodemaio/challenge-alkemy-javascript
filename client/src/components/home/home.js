@@ -1,45 +1,56 @@
 //REACT
 import React from "react";
-import { useEffect } from "react";
-// import { Link } from "react-router-dom"
+import { useState, useEffect } from "react";
 
 //REACT-REDUX
 import { useDispatch, useSelector } from "react-redux";
 
 //ACTIONS
 import {
-    getTenregister,
+
     getAllregister
 } from "../../actions/index";
+
+//COMPONENTS
+import LastTenRegister from "../lastTenRegister/lastTenRegister"
+
+//CSS
+import "./home.css"
 
 export default function Home() {
 
     const dispatch = useDispatch();
-    const tenRegisters = useSelector(state => state.tenRegisters);
-    const getAllregister = useSelector(state => state.allRegister);
+    const allRegister = useSelector(state => state.allRegister);
+
+    const [state, setState] = useState(0);
 
     useEffect(() => {
-        dispatch(getTenregister());
+        dispatch(getAllregister());
     }, []);
-    console.log(tenRegisters);
+
+    useEffect(async () => {
+        let state_acount = 0;
+        allRegister.forEach(r => {
+
+            if (r.type.name === "ingress") {
+                state_acount = state_acount + r.amount;
+            } else {
+                state_acount = state_acount - r.amount;
+            }
+        });
+        setState(state_acount);
+    }, [allRegister]);
+
     return (
-        <div>
-            <div>
-                {tenRegisters ? (
-                    tenRegisters.map((p) => {
-                        return (
-                            <div>
-                                <li>
-                                    concept: {p.concept} amount: {p.amount} date: {p.date} type: {p.type.name}
-                                </li>
-                                
-                            </div>
-                        );
-                    })
-                ) : (
-                    <p>Cargando...</p>
-                )}
+        <div id="home_container">
+            <div id="home_account_status_container">
+                <h2>Account status:</h2>
+                <p> $ {state} </p>
             </div>
+            
+
+            <LastTenRegister />
+            
         </div>
     )
 }
