@@ -1,6 +1,7 @@
 //REACT
 import React from "react";
 import { useState, useEffect } from "react";
+import {Link} from "react-router-dom"
 
 //REACT-REDUX
 import { useDispatch, useSelector } from "react-redux";
@@ -43,9 +44,11 @@ export default function Home() {
 
     return (
         <div id="home_container">
+            <Link to="/allregister">Register</Link>
             <div id="home_account_status_container">
                 <h2>Account status:</h2>
                 <p> $ {state} </p>
+                
             </div>
             
 
